@@ -1,10 +1,17 @@
 name = "BinStatistics"
 uuid = "41602cae-99cf-4169-ad6c-01f6ab844ef7"
-authors = ["Alex Gardner"]
+authors = ["Alex S. Gardner", "NASA JPL"]
 version = "0.1.0"
+
+[deps]
+CategoricalArrays = "324d7699-5711-5eae-9e2f-1d82baa6b597"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
 julia = "1"
+CategoricalArrays = "v0.10"
+DataFrames = "v1.4"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

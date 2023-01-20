@@ -1,5 +1,8 @@
 module BinStatistics
+    using DataFrames
+    using CategoricalArrays
+    using Statistics
 
-# Write your package code here.
-
+    export binstats
+    include("functions.jl")
 end
