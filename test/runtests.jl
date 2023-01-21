@@ -4,7 +4,7 @@ using Statistics
 using Test
 
 @testset "BinStatistics.jl" begin
-    df = DataFrame(x=sin.(0:0.01:100), y = cos.(0:0.01:100), v1 = 0:0.01:100, v2 = (0:0.01:100).^2);
+    df = DataFrame(x=rand(10000), y = rand(10000), v1 = cos(), v2 = (0:0.01:100).^2);
     
     df1 = binstats(df, [:x], [[-1, -.5, -0.25, 1]], [:v1])
     @test df1.nrow[2] == 841;
