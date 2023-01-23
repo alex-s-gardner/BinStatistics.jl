@@ -1,8 +1,8 @@
 # BinStatistics.jl
 Highly flexible and efficient computation of n-dimensional binned statistic(s) for n-variable(s)
 
-BinStatistics provides the `binstats` function that is build on top of `DataFrames.jl` 
-and `CatagoricalArrays.jl`
+BinStatistics provides the `binstats` function that is build on top of DataFrames.jl 
+and CatagoricalArrays.jl
 
 ## binstats function
 ```julia
