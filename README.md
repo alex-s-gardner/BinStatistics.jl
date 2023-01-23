@@ -50,7 +50,7 @@ end
 ```julia
 df1 = binstats(df, :x, 0:0.1:20, :v1)
 ```
-![binstats example 1](https://github.com/alex-s-gardner/BinStatistics.jl/assets/images/1.png?raw=true)
+![binstats example 1](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/1.png?raw=true)
 
 plotting block
 begin 
@@ -66,7 +66,7 @@ end
 ```julia
 df2 = binstats(df, :x, 0:0.1:20, ["v1", "v2"])
 ```
-
+![binstats example 2](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/2.png?raw=true)
 plotting block
 begin 
     fig = Figure()
@@ -84,7 +84,7 @@ end
 ```julia
 df3 = binstats(df, :x, 0:0.1:20, :v1; col_function = [mean, median, std])
 ```
-
+![binstats example 3](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/3.png?raw=true)
 plotting block
 begin
     fig = Figure()
@@ -103,6 +103,7 @@ end
 ```julia
 df4 = binstats(df, [:y, :x], [0:.2:20, 0:.2:20], [:v2]; missing_bins = true)
 ```
+![binstats example 4](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/4.png?raw=true)
 
 plotting block
 begin 
@@ -121,6 +122,7 @@ end
 ```julia
 df5 = binstats(df, [:y, :x], [(0:0.5:4.5).^2, (0:0.5:4.5).^2], [:v2], grp_function = [], col_function = [median], missing_bins = true)
 ```
+![binstats example 5](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/5.png?raw=true)
 
 plotting block
 begin 
