@@ -50,6 +50,7 @@ end
 ```julia
 df1 = binstats(df, :x, 0:0.1:20, :v1)
 ```
+![binstats example 1](https://github.com/alex-s-gardner/BinStatistics.jl/assets/images/1.png?raw=true)
 
 plotting block
 begin 
