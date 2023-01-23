@@ -1,5 +1,5 @@
 # BinStatistics.jl
-Highly generic and efficient computation of n-dimensional binned statistic(s) for n-variable(s)
+Highly flexible and efficient computation of n-dimensional binned statistic(s) for n-variable(s)
 
 BinStatistics provides the `binstats` function that is build on top of `DataFrames.jl` 
 and `CatagoricalArrays.jl`
@@ -46,34 +46,34 @@ begin
 end
 ```
 
-### calculate `count/nrow` and mean of `v1` binned according to `x`
+### Example 1: calculate count/nrow and mean of v1 binned according to x
 ```julia
 df1 = binstats(df, :x, 0:0.1:20, :v1)
 ```
 ![binstats example 1](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/1.png?raw=true)
 
 
-### calculate `count/nrow` and `medain` of `v1` and `v3` binned according to `x`
+### Example 2: calculate count/nrow and medain of v1 and v2 binned according to x
 ```julia
 df2 = binstats(df, :x, 0:0.1:20, ["v1", "v2"])
 ```
 ![binstats example 2](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/2.png?raw=true)
 
 
-### calculate `count/nrow`, `mean`, `medain` and `std` of `v1` binned according to `x`
+### Example 3: calculate count/nrow, mean, medain and std of v1 binned according to x
 ```julia
 df3 = binstats(df, :x, 0:0.1:20, :v1; col_function = [mean, median, std])
 ```
 ![binstats example 3](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/3.png?raw=true)
 
 
-### calculate `count/nrow` and `mean` of `v2` binned according to `y` and `x`
+### Example 4: calculate count/nrow  and mean of v2 binned according to y and x
 ```julia
 df4 = binstats(df, [:y, :x], [0:.2:20, 0:.2:20], [:v2]; missing_bins = true)
 ```
 ![binstats example 4](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/4.png?raw=true)
 
-### calculate `median` of `v2` binned according to `y` and `x` using non-uniform `axis_edges`
+### Example 5: calculate median of v2 binned according to y and x using non-uniform axis_edges
 ```julia
 df5 = binstats(df, [:y, :x], [(0:0.5:4.5).^2, (0:0.5:4.5).^2], [:v2], grp_function = [], col_function = [median], missing_bins = true)
 ```
