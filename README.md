@@ -52,7 +52,38 @@ df1 = binstats(df, :x, 0:0.1:20, :v1)
 ```
 ![binstats example 1](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/1.png?raw=true)
 
-plotting block
+
+### calculate `count/nrow` and `medain` of `v1` and `v3` binned according to `x`
+```julia
+df2 = binstats(df, :x, 0:0.1:20, ["v1", "v2"])
+```
+![binstats example 2](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/2.png?raw=true)
+
+
+### calculate `count/nrow`, `mean`, `medain` and `std` of `v1` binned according to `x`
+```julia
+df3 = binstats(df, :x, 0:0.1:20, :v1; col_function = [mean, median, std])
+```
+![binstats example 3](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/3.png?raw=true)
+
+
+### calculate `count/nrow` and `mean` of `v2` binned according to `y` and `x`
+```julia
+df4 = binstats(df, [:y, :x], [0:.2:20, 0:.2:20], [:v2]; missing_bins = true)
+```
+![binstats example 4](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/4.png?raw=true)
+
+### calculate `median` of `v2` binned according to `y` and `x` using non-uniform `axis_edges`
+```julia
+df5 = binstats(df, [:y, :x], [(0:0.5:4.5).^2, (0:0.5:4.5).^2], [:v2], grp_function = [], col_function = [median], missing_bins = true)
+```
+![binstats example 5](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/5.png?raw=true)
+
+
+
+## Plotting script
+```julia
+# plotting block 1
 begin 
     fig = Figure()
     Axis(fig[1, 1], title = "raw data")
@@ -62,12 +93,7 @@ begin
     fig
 end
 
-### calculate `count/nrow` and `medain` of `v1` and `v3` binned according to `x`
-```julia
-df2 = binstats(df, :x, 0:0.1:20, ["v1", "v2"])
-```
-![binstats example 2](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/2.png?raw=true)
-plotting block
+# plotting block 2
 begin 
     fig = Figure()
     Axis(fig[1, 1], title = "raw data")
@@ -79,13 +105,7 @@ begin
     fig
 end
 
-
-### calculate `count/nrow`, `mean`, `medain` and `std` of `v1` binned according to `x`
-```julia
-df3 = binstats(df, :x, 0:0.1:20, :v1; col_function = [mean, median, std])
-```
-![binstats example 3](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/3.png?raw=true)
-plotting block
+# plotting block 3
 begin
     fig = Figure()
     Axis(fig[1, 1], title = "raw data")
@@ -98,14 +118,7 @@ begin
     fig
 end
 
-
-### calculate `count/nrow` and `mean` of `v2` binned according to `y` and `x`
-```julia
-df4 = binstats(df, [:y, :x], [0:.2:20, 0:.2:20], [:v2]; missing_bins = true)
-```
-![binstats example 4](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/4.png?raw=true)
-
-plotting block
+# plotting block 4
 begin 
     fig = Figure()
     Axis(fig[1, 1], title = "raw data")
@@ -118,13 +131,7 @@ begin
     fig
 end
 
-### calculate `median` of `v2` binned according to `y` and `x` using non-uniform `axis_edges`
-```julia
-df5 = binstats(df, [:y, :x], [(0:0.5:4.5).^2, (0:0.5:4.5).^2], [:v2], grp_function = [], col_function = [median], missing_bins = true)
-```
-![binstats example 5](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/5.png?raw=true)
-
-plotting block
+# plotting block 5
 begin 
     fig = Figure()
     Axis(fig[1, 1], title = "raw data")
@@ -134,3 +141,4 @@ begin
     heatmap!(fig[1, 2], unique(bincenter.(df5[:,1])),unique(bincenter.(df5[:,2])), reshape(df5.v2_mean,length(unique(df5[:,2])),length(unique(df5[:,1]))), colormap = :thermal)
     fig
 end
+```
