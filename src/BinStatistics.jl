@@ -4,5 +4,7 @@ module BinStatistics
     using Statistics
 
     export binstats
+    export binedges
+    export bincenter
     include("functions.jl")
 end
