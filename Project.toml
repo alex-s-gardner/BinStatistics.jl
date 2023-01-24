@@ -1,7 +1,7 @@
 name = "BinStatistics"
 uuid = "41602cae-99cf-4169-ad6c-01f6ab844ef7"
 authors = ["Alex S. Gardner", "NASA JPL"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 CategoricalArrays = "324d7699-5711-5eae-9e2f-1d82baa6b597"
