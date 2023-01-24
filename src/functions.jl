@@ -89,11 +89,11 @@ function  binstats(
     col_function isa AbstractArray || (col_function = [col_function])
 
     # number of axes for binning
-    nbinv = length(axis_col)
+    naxis = length(axis_col)
 
     # subset dataframe
     idxcols = DataFrames.index(df)[axis_col]
-    if length(idxcols) !== nbinv
+    if length(idxcols) !== naxis
         error("data frame does not contian fields $axis_col, check kwarg axis_col")
     end
     
@@ -101,38 +101,35 @@ function  binstats(
 
     # bin data using CatagoricalArrays
     sdf = select(df, idxcols, copycols=false)
-    for i in eachindex(axis_col)
-        println(axis_edges[i])
+    for i in 1:naxis
         sdf[!,i] = cut(sdf[!,i], axis_edges[i], extend=missing);
     end
     
     if missing_bins
-        levels = Vector{Vector{String}}(undef, nbinv)
-        for i in 1:nbinv
+        levels = Vector{Vector{String}}(undef, naxis)
+        for i in 1:naxis
             levels[i] =  sdf[!,i].pool.levels
         end
     end
 
     # group data that falls within the same bin
-    gdf = groupby(sdf, 1:nbinv);
-    
-
-
+    gdf = groupby(sdf, 1:naxis);
+   
     # drop all data that falls outside of bin edges
-    for i = 1:nbinv
+    for i = 1:naxis
         gdf = filter(x -> !any(ismissing(x[1,i])), gdf)
     end
 
     # compute statistics on binned data
-    sdf = combine(gdf, (grp_function)..., (nbinv+1):length(idxcols) .=> col_function)
+    sdf = combine(gdf, (grp_function)..., (naxis+1):length(idxcols) .=> col_function)
 
     # unwrap CatagoricalArray
-    sdf[!,1:nbinv] = unwrap.(sdf[!,1:nbinv])
+    sdf[!,1:naxis] = unwrap.(sdf[!,1:naxis])
 
     if missing_bins
         # find missing binds
         bins = Iterators.product(levels...)
-        bins = setdiff(bins, tuple.(eachcol(sdf[:,1:nbinv])...))
+        bins = setdiff(bins, tuple.(eachcol(sdf[:,1:naxis])...))
 
         if !isempty(bins)
             # collect tuples into matrix
@@ -142,21 +139,20 @@ function  binstats(
 
             # populate missing bins
             mdf = similar(sdf,size(bins,1))
-            mdf[!,1:nbinv] = bins
+            mdf[!,1:naxis] = bins
 
-            allowmissing!(mdf,(nbinv+1):ncol(sdf))
-            mdf[!,(nbinv+1):end] .= missing
+            allowmissing!(mdf,(naxis+1):ncol(sdf))
+            mdf[!,(naxis+1):end] .= missing
 
             # append
-            allowmissing!(sdf, (nbinv+1):ncol(sdf))
+            allowmissing!(sdf, (naxis+1):ncol(sdf))
             append!(sdf,mdf)
 
             # sort
-           
+            sdf = sort!(sdf, 1:naxis)
         end
     end
 
-    #sdf = sort!(sdf, nbinv:-1:1)
     return sdf
 end
 
