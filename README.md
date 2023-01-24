@@ -188,7 +188,8 @@ begin
     scatter!(fig[1, 1], df.y, df.x, color = df.v2, colormap = :thermal, markersize = 1)
     xlims!(0, 20); ylims!(0, 20)
     Axis(fig[1, 2], title = "binned data")
-    heatmap!(fig[1, 2], unique(bincenter.(df5[:,1])),unique(bincenter.(df5[:,2])), reshape(df5.v2_mean,length(unique(df5[:,2])),length(unique(df5[:,1]))), colormap = :thermal)
+    heatmap!(fig[1, 2], unique(bincenter.(df5[:,1])),unique(bincenter.(df5[:,2])),
+        reshape(df5.v2_mean,length(unique(df5[:,2])),length(unique(df5[:,1]))), colormap = :thermal)
     fig
 end
 ```
