@@ -26,11 +26,15 @@ Returns a DataFrame containing function values for binned variables of `df`.
 
 ### load packages
 ```julia
-
+using Pkg
+Pkg.add(url="https://github.com/alex-s-gardner/BinStatistics.jl#main")
+Pkg.add(DataFrames)
+Pkg.add(Statistics)
+Pkg.add(CairoMakie)
 using BinStatistics
 using DataFrames
-using CairoMakie
 using Statistics
+using CairoMakie
 ```
 
 ### make synthetic data
