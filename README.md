@@ -152,6 +152,7 @@ begin
     fig = Figure()
     Axis(fig[1, 1], title = "raw data")
     scatter!(fig[1, 1], df.x, df.v1)
+    scatter!(fig[1, 1], df.x, df.v2)
     Axis(fig[1, 2], title = "binned data")
     scatter!(fig[1, 2], bincenter.(df2[:,1]), df2.v1_mean, label = "v1")
     scatter!(fig[1, 2], bincenter.(df2[:,1]), df2.v2_mean, label = "v2")
