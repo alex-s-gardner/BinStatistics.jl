@@ -63,7 +63,7 @@ df1 = binstats(df, :x, 0:0.1:20, :v1)
 ![binstats example 1](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/1.png?raw=true)
 
 
-### Example 2: calculate count/nrow and medain of v1 and v2 binned according to x
+### Example 2: calculate count/nrow and mean of v1 and v2 binned according to x
 ```julia
 df2 = binstats(df, :x, 0:0.1:20, ["v1", "v2"])
 
