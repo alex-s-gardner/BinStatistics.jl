@@ -6,8 +6,8 @@ Returns a DataFrame containing function values for binned variables of `df`.
 
 # Arguments
 - `axis_col`: binning axes column(s)
-- `axis_edges`: bin edges for axes column(s) `axis_col`
-- `bin_col`: column(s) to be binned
+- `axis_edges`: bin edges for `axis_col`
+- `bin_col`: column variable(s) to be binned
 - `grp_function = [nrow]`: column independent funciton(s) to be applied at group level
 - `var_function = [mean]`: column dependent funciton(s) to be applied to `bin_col` at group level
 - `missing_bin = false`: include missing bins
@@ -17,8 +17,8 @@ Returns a DataFrame containing function values for binned variables of `df`.
 ```jldoctest
 julia> df = DataFrame(x=sin.(0:0.01:100), y = cos.(0:0.01:100), v1 = 0:0.01:100, v2 = (0:0.01:100).^2)
 
-# return default `nrow` and `mean` of variable `v1` when binned as a function of `x`
-julia> binstats(df, [:x], [[-1, -.5, -0.25, 1]], [:v1])
+# bin as a function of `x` and return the `nrow` and `mean` of `v1` within each bin
+julia> binstats(df, :x, [-1, -.5, -0.25, 1], :v1)
 3×3 DataFrame
  Row │ x              nrow   v1_mean 
      │ String         Int64  Float64 
@@ -27,7 +27,7 @@ julia> binstats(df, [:x], [[-1, -.5, -0.25, 1]], [:v1])
    2 │ [-0.5, -0.25)    841  50.2257
    3 │ [-0.25, 1.0)    5810  48.9042
 
-# bin as a function of `x` and `y`
+# bin as a function of `x` and `y` nd return the `nrow` and `mean` of `v1` within each bin
 julia> binstats(df, [:x, :y], [[-1, -.5, -0.25, 1], [-1, 0, 1]], [:v1])
 6×4 DataFrame
  Row │ x              y            nrow   v1_mean 
@@ -40,8 +40,7 @@ julia> binstats(df, [:x, :y], [[-1, -.5, -0.25, 1], [-1, 0, 1]], [:v1])
    5 │ [-0.25, 1.0)   [-1.0, 0.0)   2918  49.6149
    6 │ [-0.25, 1.0)   [0.0, 1.0)    2891  48.2039
 
-# bin as a function of `x` and `y` and return the `meadian` of `v1` and the `std` of `v2` 
-# within each bin
+# bin as a function of `x` and `y` and return the `mean` of `v1` and the `std` of `v2` within each bin
 julia> binstats(df, [:x, :y], [[-1, -.5, -0.25, 1], [-1, 0, 1]], [:v1, :v2], grp_function = [], col_function = [mean, std])
 6×4 DataFrame
  Row │ x              y            v1_mean  v2_std  
@@ -54,11 +53,9 @@ julia> binstats(df, [:x, :y], [[-1, -.5, -0.25, 1], [-1, 0, 1]], [:v1, :v2], grp
    5 │ [-0.25, 1.0)   [-1.0, 0.0)  49.6149  2970.39
    6 │ [-0.25, 1.0)   [0.0, 1.0)   48.2039  2864.74
 
-# bin as a function of `x` and `y` and return the `meadian` abd `std` for both `v1` 
-# and `v2` within each bin... NOTE: `col_functions`` from changed `Vector` to `Matrix` 
-# i.e. comma removed
+# bin as a function of `x` and `y` and return the `mean` and `std` of both `v1` and `v2` within each bin
+# NOTE: `col_function` from changed `Vector` to `Matrix`, i.e. comma removed from col_function
 julia> binstats(df, [:x, :y], [[-1, -.5, -0.25, 1], [-1, 0, 1]], [:v1, :v2], grp_function = [], col_function = [mean std])
-
 6×6 DataFrame
  Row │ x              y            v1_mean  v2_mean  v1_std   v2_std  
      │ String         String       Float64  Float64  Float64  Float64 
@@ -73,7 +70,7 @@ julia> binstats(df, [:x, :y], [[-1, -.5, -0.25, 1], [-1, 0, 1]], [:v1, :v2], grp
 function  binstats(
     df::DataFrame,
     axis_col::Union{Vector{Symbol}, Vector{String}, Symbol, String},
-    axis_edges::AbstractVector, #Union{Vector{Vector{<:Real}},Vector{Vector{StepRange{}}}},
+    axis_edges::AbstractVector, 
     bin_col::Union{Vector{Symbol}, Vector{String}, Symbol, String};
     grp_function::F1 = [nrow],
     col_function::F2 = [mean],
@@ -88,7 +85,7 @@ function  binstats(
     grp_function isa AbstractArray || (grp_function = [grp_function])
     col_function isa AbstractArray || (col_function = [col_function])
 
-    # number of axes for binning
+    # number of axes along which to perfom binning of variables
     naxis = length(axis_col)
 
     # subset dataframe
@@ -159,7 +156,7 @@ end
 
 """
     binedges(ca_edges)
-Converts CatagoricalArray bin edge strings to bin edges a vector of Float64s
+Converts CatagoricalArray bin edge string to bin edges a vector of Float64s
 """
 function binedges(ca_edges::String)
     edges = split(ca_edges, ", ")
@@ -178,11 +175,11 @@ function bincenter(edges::Vector{<:Real})
 end
 
 """
-    bincenter(binvar_edges)
+    bincenter(ca_edges)
 Converts CatagoricalArray bin edge strings to bin center Float64
 """
-function bincenter(ca_edge::String)
-    edges = binedges(ca_edge)
-    center = sum(edges) /2
+function bincenter(ca_edges::String)
+    edges = binedges(ca_edges)
+    center = bincenter(edges)
     return center
 end
