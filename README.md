@@ -14,8 +14,8 @@ Returns a DataFrame containing function values for binned variables of `df`.
 
 # Arguments
 - `axis_col`: binning axes column(s)
-- `axis_edges`: bin edges for axes column(s) `axis_col`
-- `bin_col`: column(s) to be binned
+- `axis_edges`: bin edges for `axis_col`
+- `bin_col`: column variable(s) to be binned
 - `grp_function = [nrow]`: column independent funciton(s) to be applied at group level
 - `var_function = [mean]`: column dependent funciton(s) to be applied to `bin_col` at group level
 - `missing_bin = false`: include missing bins
@@ -28,9 +28,9 @@ Returns a DataFrame containing function values for binned variables of `df`.
 ```julia
 using Pkg
 Pkg.add(url="https://github.com/alex-s-gardner/BinStatistics.jl#main")
-Pkg.add(DataFrames)
-Pkg.add(Statistics)
-Pkg.add(CairoMakie)
+Pkg.add("DataFrames")
+Pkg.add("Statistics")
+Pkg.add("CairoMakie")
 using BinStatistics
 using DataFrames
 using Statistics
@@ -133,7 +133,18 @@ df5 = binstats(df, [:y, :x], [(0:0.5:4.5).^2, (0:0.5:4.5).^2], [:v2], grp_functi
 ```
 ![binstats example 5](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/5.png?raw=true)
 
+### Example 6: apply custom function to v2, binned according to y and x
+```julia
+# create a median absolute deviation function
+# binstats also accepts anonymous functions but the output will be assinged a generic name
+function mad(x)
+    median(abs.(x .- median(x))) 
+end
 
+# apply to grouped data
+df6 = binstats(df, [:y, :x], [0:1:20, 0:1:20], [:v2], grp_function = [], col_function = [mad],; missing_bins = true)
+```
+![binstats example 6](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/6.png?raw=true)
 
 ## Plotting script
 ```julia
@@ -197,4 +208,18 @@ begin
         reshape(df5.v2_mean,length(unique(df5[:,2])),length(unique(df5[:,1]))), colormap = :thermal)
     fig
 end
+
+# Example 6
+begin 
+    fig = Figure()
+    Axis(fig[1, 1], title = "raw data")
+    scatter!(fig[1, 1], df.y, df.x, color = df.v2, colormap = :thermal, markersize = 1)
+    xlims!(0, 20); ylims!(0, 20)
+    Axis(fig[1, 2], title = "binned data")
+    heatmap!(fig[1, 2], unique(bincenter.(df6[:,1])),unique(bincenter.(df6[:,2])), 
+        reshape(df6.v2_mad,length(unique(df6[:,2])),length(unique(df6[:,1]))), 
+        colormap = :thermal)
+    fig
+end
+
 ```
