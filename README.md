@@ -136,13 +136,22 @@ df5 = binstats(df, [:y, :x], [(0:0.5:4.5).^2, (0:0.5:4.5).^2], [:v2], grp_functi
 ### Example 6: apply custom function to v2, binned according to y and x
 ```julia
 # create a median absolute deviation function
-# binstats also accepts anonymous functions but the output will be assinged a generic name
 function mad(x)
     median(abs.(x .- median(x))) 
 end
+# binstats also accepts anonymous functions but the output will be assinged a generic name
 
 # apply to grouped data
 df6 = binstats(df, [:y, :x], [0:1:20, 0:1:20], [:v2], grp_function = [], col_function = [mad],; missing_bins = true)
+
+400×3 DataFrame
+ Row │ y         x         v2_mad  
+     │ String    String    Float64 
+─────┼─────────────────────────────
+   1 │ [0, 1)    [0, 1)    1.97968
+   2 │ [0, 1)    [1, 2)    2.00256
+  ⋮  │    ⋮         ⋮         ⋮
+ 400 │ [19, 20)  [19, 20)  2.02256
 ```
 ![binstats example 6](https://github.com/alex-s-gardner/BinStatistics.jl/blob/main/assets/images/6.png?raw=true)
 
