@@ -4,7 +4,7 @@ Highly flexible and efficient computation of n-dimensional binned statistic(s) f
 BinStatistics provides the `binstats` function that is build on top of DataFrames.jl 
 and CatagoricalArrays.jl
 
-2X-10X faster that scipy-1.8.0 binned_statistics
+`binstats` is 2X-10X faster than `scipy`-1.8.0 binned_statistic/_2d/_dd
 
 ## binstats function
 ```julia
@@ -238,7 +238,7 @@ end
 
 # Similar packages
 ## Julia
-[BinnedStatistics.jl](https://github.com/kirklong/BinnedStatistics.jl) for 1-D binned statistics for single variable
+[BinnedStatistics.jl](https://github.com/kirklong/BinnedStatistics.jl) for single variable 1-D binned statistics
 
 ## Python
-Scipy's [binned_statistic](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binned_statistic.html), [binned_statistic_2d](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binned_statistic_2d.html), and [binned_statistic_dd](scipy.stats.binned_statistic_dd) for 1-, 2-, and n-dimensional binned statistics for a single variable
+Scipy's [binned_statistic](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binned_statistic.html), [binned_statistic_2d](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binned_statistic_2d.html), and [binned_statistic_dd](scipy.stats.binned_statistic_dd) for single variable 1-, 2-, and n-dimensional binned statistics
