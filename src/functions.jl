@@ -124,30 +124,7 @@ function  binstats(
     sdf[!,1:naxis] = unwrap.(sdf[!,1:naxis])
 
     if missing_bins
-        # find missing binds
-        bins = Iterators.product(levels...)
-        bins = setdiff(bins, tuple.(eachcol(sdf[:,1:naxis])...))
-
-        if !isempty(bins)
-            # collect tuples into matrix
-            bins = reduce(hcat, collect.(bins))
-            bins = permutedims(bins,[2,1]);
-            #bins = reverse(bins,dims=2)
-
-            # populate missing bins
-            mdf = similar(sdf,size(bins,1))
-            mdf[!,1:naxis] = bins
-
-            allowmissing!(mdf,(naxis+1):ncol(sdf))
-            mdf[!,(naxis+1):end] .= missing
-
-            # append
-            allowmissing!(sdf, (naxis+1):ncol(sdf))
-            append!(sdf,mdf)
-
-            # sort
-            sdf = sort!(sdf, 1:naxis)
-        end
+        sdf = _add_missing_bins(sdf, levels, naxis)
     end
 
     return sdf
@@ -174,6 +151,7 @@ function bincenter(edges::Vector{<:Real})
     return center
 end
 
+
 """
     bincenter(ca_edges)
 Converts CatagoricalArray bin edge strings to bin center Float64
@@ -182,4 +160,36 @@ function bincenter(ca_edges::String)
     edges = binedges(ca_edges)
     center = bincenter(edges)
     return center
+end
+
+"""
+Internal function for adding bins that do not contain data
+"""
+function _add_missing_bins(sdf, levels, naxis)
+    # find missing binds
+    bins = Iterators.product(levels...)
+    bins = setdiff(bins, tuple.(eachcol(sdf[:,1:naxis])...))
+
+    if !isempty(bins)
+        # collect tuples into matrix
+        bins = reduce(hcat, collect.(bins))
+        bins = permutedims(bins,[2,1]);
+        #bins = reverse(bins,dims=2)
+
+        # populate missing bins
+        mdf = similar(sdf,size(bins,1))
+        mdf[!,1:naxis] = bins
+
+        allowmissing!(mdf,(naxis+1):ncol(sdf))
+        mdf[!,(naxis+1):end] .= missing
+
+        # append
+        allowmissing!(sdf, (naxis+1):ncol(sdf))
+        append!(sdf,mdf)
+
+        # sort
+        sdf = sort!(sdf, 1:naxis)
+    end
+
+    return sdf
 end
