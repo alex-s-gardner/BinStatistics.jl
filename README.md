@@ -159,10 +159,6 @@ df6 = binstats(df, [:y, :x], [0:1:20, 0:1:20], [:v2], grp_function = [], col_fun
 
 ## Plotting script
 ```julia
-using Pkg
-Pkg.add(CairoMakie)
-using CairoMakie
-
 # Example 1
 begin 
     fig = Figure()
