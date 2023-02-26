@@ -4,7 +4,7 @@ Highly flexible and efficient computation of n-dimensional binned statistic(s) f
 BinStatistics provides the `binstats` function that is build on top of DataFrames.jl 
 and CatagoricalArrays.jl
 
-`binstats` is 2X-10X faster than `scipy`-1.8.0 binned_statistic/_2d/_dd
+`binstats` is 2X-10X faster than Python's scipy-1.8.0
 
 ## binstats function
 ```julia
@@ -29,7 +29,7 @@ Returns a DataFrame containing function values for binned variables of `df`.
 ### load packages
 ```julia
 using Pkg
-Pkg.add(url="https://github.com/alex-s-gardner/BinStatistics.jl#main")
+Pkg.add("BinStatistics")
 Pkg.add("DataFrames")
 Pkg.add("Statistics")
 Pkg.add("CairoMakie")
