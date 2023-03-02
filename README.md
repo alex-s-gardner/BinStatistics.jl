@@ -1,5 +1,4 @@
 # BinStatistics.jl
-[![Package Downloads](https://shields.io/endpoint?url=https://pkgs.genieframework.com/api/v1/badge/BinStatistics)](https://pkgs.genieframework.com?packages=BinStatistics&startdate=2015-12-30&enddate=2040-12-31)
 
 Highly flexible and efficient computation of n-dimensional binned statistic(s) for n-variable(s)
 
