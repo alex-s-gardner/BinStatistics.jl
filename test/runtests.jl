@@ -8,7 +8,7 @@ using Test
     df = DataFrame(x=1:n, y=sin.(0.1:0.1:(n/10)), v1 = cos.(0.1:0.1:(n/10)), v2 = (1:n).^2);
     
     df1 = binstats(df, :x, [1, 500, 5000, 10000], :v1)
-    @test df1.nrow[1] == 499;
+    @test df1.nrow[1] == 499
 
     df2 = binstats(df, [:x, :y], [[1, 500, 5000, 10000], [-1, -0.5, 0, 0.5, 1]], :v1)
     @test round(df2.v1_mean[3], digits = 10) == 0.0205146127
