@@ -1,6 +1,6 @@
 """
     binstats(df, axis_col, axis_edges, bin_col; 
-        grp_function = [nrow], col_function = [mean], missing_bin = false)
+        grp_function = [nrow], col_function = [mean], missing_bins = false)
     
 Returns a DataFrame containing function values for binned variables of `df`.
 
@@ -10,7 +10,7 @@ Returns a DataFrame containing function values for binned variables of `df`.
 - `bin_col`: column variable(s) to be binned
 - `grp_function = [nrow]`: column independent funciton(s) to be applied at group level
 - `var_function = [mean]`: column dependent funciton(s) to be applied to `bin_col` at group level
-- `missing_bin = false`: include missing bins
+- `missing_bins = false`: include missing bins
 
 # Examples
 
