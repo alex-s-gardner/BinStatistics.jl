@@ -102,13 +102,13 @@ function  binstats(
     fmt(from, to, i; leftclosed, rightclosed) = (from + to)*.5
 
     for i in 1:naxis
-        if eltype(axis_edges[i])<:Number
+        try
             sdf[!,i] = cut(
             sdf[!,i], 
             axis_edges[i]; 
             extend = missing, 
             labels = fmt);
-        else
+        catch
             error("axis_edges must be numberic")
         end
     end
