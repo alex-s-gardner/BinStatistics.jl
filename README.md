@@ -7,6 +7,13 @@ and CatagoricalArrays.jl
 
 `binstats` is 2X-10X faster than Python's scipy-1.8.0
 
+
+
+## !! WARNING !! ##
+Expect breaking changes as this package is under active development
+##
+
+
 ## binstats function
 ```julia
 """
