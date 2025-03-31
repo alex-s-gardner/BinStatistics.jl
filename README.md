@@ -24,11 +24,12 @@ Returns a DataFrame containing function values for binned variables of `df`.
 
 # Arguments
 - `axis_col`: binning axes column(s)
-- `axis_edges`: bin edges for `axis_col`
-- `bin_col`: column variable(s) to be binned
-- `grp_function = [nrow]`: column independent funciton(s) to be applied at group level
-- `var_function = [mean]`: column dependent funciton(s) to be applied to `bin_col` at group level
-- `missing_bins = false`: include missing bins
+- `axis_edges`: bin edges for `axis_col`s, as vector or ranges.
+- `bin_col`: column variable(s) to be binned on.
+- `grp_function = [nrow]`: column independent function(s) to be applied at group level
+- `var_function = [mean]`: column dependent function(s) to be applied to each `bin_col` at group level.  
+  If multiple, then each `var_function` corresponds to the `bin_col` at that index.
+- `missing_bin = false`: include missing bins
 """
 ```
 
