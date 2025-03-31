@@ -6,10 +6,11 @@ Returns a DataFrame containing function values for binned variables of `df`.
 
 # Arguments
 - `axis_col`: binning axes column(s)
-- `axis_edges`: bin edges for `axis_col`
-- `bin_col`: column variable(s) to be binned
-- `grp_function = [nrow]`: column independent funciton(s) to be applied at group level
-- `var_function = [mean]`: column dependent funciton(s) to be applied to `bin_col` at group level
+- `axis_edges`: bin edges for `axis_col`s, as vector-like things or ranges.
+- `bin_col`: column variable(s) to be binned on.  multiple columns essentially form a multidimensional array.
+- `grp_function = [nrow]`: column independent function(s) to be applied at group level
+- `var_function = [mean]`: column dependent function(s) to be applied to each `bin_col` at group level.  
+  If multiple, then each `var_function` corresponds to the `bin_col` at that index.
 - `missing_bin = false`: include missing bins
 
 # Examples
@@ -109,7 +110,7 @@ function  binstats(
             extend = missing, 
             labels = fmt);
         catch
-            error("axis_edges must be numberic")
+            error("axis_edges must be numeric")
         end
     end
     
